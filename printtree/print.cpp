@@ -28,22 +28,15 @@ string version =
  *------------------------------------------------------------------------------
  */
 int level = 0;
+bool is_right;
+bool right_child;
+bool left_child;
+bool is_left;
 int counter = 0;
+map<int,bool> level_map;
 string vertical_level_track(int i){
 	string ret="";
-	if(i==1){
-		ret = "|__";
-		counter++;
-	}
-	else if(i != 0){
-		if(counter==1){
-			ret = "|";
-		}
-		for(int j=0; j<level; j++){
-			ret += "  ";
-		}
-		ret += "|__";
-	}
+	//for(int j=0; j<map.
 	return ret;
 }
 /**
@@ -56,21 +49,27 @@ void vertical_print(BTNode<string>* root) {
 	BTNode<string> *copyofroot=root;
 	cout << vertical_level_track(level) << root->payload << endl;
 	if(root->right != NULL){
+		is_right = true;
 		level++;
+		map(level,true);
 		copyofroot = root->right;
 		vertical_print(copyofroot);
 		if(root->left == NULL){
 			cout << vertical_level_track(level) << 'x' << endl;
 		}
+		map.erase(level);
 		level--;
 	}
 	if(root->left != NULL){
+		is_right = false;
 		level++;
+		map(level,false);
 		if(root->right == NULL){
 			cout << vertical_level_track(level) << 'x' << endl;
 		}
 		copyofroot = root->left;
 		vertical_print(copyofroot);
+		map.erase(level);
 		level--;
 	}
 }
