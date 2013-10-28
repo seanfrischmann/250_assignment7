@@ -1,7 +1,7 @@
 // =============================================================================
 // print.cpp
 // ~~~~~~~~~
-// YOUR NAME HERE
+// Sean Frischmann
 // - implement the three tree printing routines
 // *****************************************************************************
 #include <iostream>
@@ -19,8 +19,8 @@ using namespace std;
 // feel free to change the following notice
 string version = 
     "UB Tree Program. Version 0.1\n"
-    " Author: YOUR NAME\n"
-    " Report bugs to yourid@buffalo.edu\n";
+    " Author: Sean Frischmann\n"
+    " Report bugs to seanfris@buffalo.edu\n";
 
 /**
  * -----------------------------------------------------------------------------
@@ -29,7 +29,15 @@ string version =
  */
 void vertical_print(BTNode<string>* root) {
     // your code goes here
-    cout << "Vertical print: TBD\n";
+	cout << root->payload << endl;
+	if(root->right != NULL){
+		root = root->right;
+		vertical_print(root);
+	}
+	if(root->left != NULL){
+		root = root->left;
+		vertical_print(root);
+	}
 }
 
 /**
