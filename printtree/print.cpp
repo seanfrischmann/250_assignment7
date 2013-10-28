@@ -28,13 +28,17 @@ string version =
  *------------------------------------------------------------------------------
  */
 int level = 0;
+int counter = 0;
 string vertical_level_track(int i){
 	string ret="";
 	if(i==1){
 		ret = "|__";
+		counter++;
 	}
 	else if(i != 0){
-		ret = "|";
+		if(counter==1){
+			ret = "|";
+		}
 		for(int j=0; j<level; j++){
 			ret += "  ";
 		}
@@ -55,16 +59,16 @@ void vertical_print(BTNode<string>* root) {
 		level++;
 		copyofroot = root->right;
 		vertical_print(copyofroot);
-		level--;
 		if(root->left == NULL){
 			cout << vertical_level_track(level) << 'x' << endl;
 		}
+		level--;
 	}
 	if(root->left != NULL){
+		level++;
 		if(root->right == NULL){
 			cout << vertical_level_track(level) << 'x' << endl;
 		}
-		level++;
 		copyofroot = root->left;
 		vertical_print(copyofroot);
 		level--;
