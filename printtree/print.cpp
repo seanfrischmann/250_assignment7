@@ -22,6 +22,26 @@ string version =
     " Author: Sean Frischmann\n"
     " Report bugs to seanfris@buffalo.edu\n";
 
+/*
+ * -----------------------------------------------------------------------------
+ *Vertical Level track
+ *------------------------------------------------------------------------------
+ */
+int level = 0;
+string vertical_level_track(int i){
+	string ret="";
+	if(i==1){
+		ret = "|__";
+	}
+	else if(i != 0){
+		ret = "|";
+		for(int j=0; j<level; j++){
+			ret += "  ";
+		}
+		ret += "|__";
+	}
+	return ret;
+}
 /**
  * -----------------------------------------------------------------------------
  * print a given tree vertically
@@ -29,14 +49,25 @@ string version =
  */
 void vertical_print(BTNode<string>* root) {
     // your code goes here
-	cout << root->payload << endl;
+	BTNode<string> *copyofroot=root;
+	cout << vertical_level_track(level) << root->payload << endl;
 	if(root->right != NULL){
-		root = root->right;
-		vertical_print(root);
+		level++;
+		copyofroot = root->right;
+		vertical_print(copyofroot);
+		level--;
+		if(root->left == NULL){
+			cout << vertical_level_track(level) << 'x' << endl;
+		}
 	}
 	if(root->left != NULL){
-		root = root->left;
-		vertical_print(root);
+		if(root->right == NULL){
+			cout << vertical_level_track(level) << 'x' << endl;
+		}
+		level++;
+		copyofroot = root->left;
+		vertical_print(copyofroot);
+		level--;
 	}
 }
 
