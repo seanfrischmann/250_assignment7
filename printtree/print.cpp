@@ -24,21 +24,51 @@ string version =
 
 /*
  * -----------------------------------------------------------------------------
- *Vertical Level track
+ * vprint method
  *------------------------------------------------------------------------------
- */
-int level = 0;
-bool is_right;
-bool right_child;
-bool left_child;
-bool is_left;
-int counter = 0;
-map<int,bool> level_map;
-string vertical_level_track(int i){
-	string ret="";
-	//for(int j=0; j<map.
-	return ret;
+*/
+bool left_side=false;
+bool first_case=true;
+bool second_case=false;
+void vprint(BTNode<string>* root, string prefix){
+	if(!left_side){
+		if(first_case){
+			cout << prefix << "__" << root->payload << endl;
+			first_case = false;
+		}else{
+			cout << prefix << "|__" << root->payload << endl;
+			second_case=false;
+		}
+	}else{
+		cout << prefix << "|__" << root->payload << endl;
+	}
+
+	if(root->right != NULL){
+		left_side=false;
+		vprint(root->right, prefix += "  ");
+		cout << prefix << "|" << endl;
+	}else{
+		left_side=true;
+	}
+
+
+	if((root->left == NULL) && (root->right != NULL)){
+		cout << prefix << " |__x" << endl;
+		second_case=true;
+	}else if((root->left != NULL) && (root->right == NULL)){
+		cout << prefix << " |__x" << endl;
+		second_case=true;
+	}
+	if(root->left != NULL){
+		if(!second_case){
+			vprint(root->left, prefix += "");
+			second_case=true;
+		}else{
+			vprint(root->left, prefix += " ");
+		}
+	}
 }
+
 /**
  * -----------------------------------------------------------------------------
  * print a given tree vertically
@@ -46,32 +76,12 @@ string vertical_level_track(int i){
  */
 void vertical_print(BTNode<string>* root) {
     // your code goes here
-	BTNode<string> *copyofroot=root;
-	cout << vertical_level_track(level) << root->payload << endl;
-	if(root->right != NULL){
-		is_right = true;
-		level++;
-		map(level,true);
-		copyofroot = root->right;
-		vertical_print(copyofroot);
-		if(root->left == NULL){
-			cout << vertical_level_track(level) << 'x' << endl;
-		}
-		map.erase(level);
-		level--;
-	}
-	if(root->left != NULL){
-		is_right = false;
-		level++;
-		map(level,false);
-		if(root->right == NULL){
-			cout << vertical_level_track(level) << 'x' << endl;
-		}
-		copyofroot = root->left;
-		vertical_print(copyofroot);
-		map.erase(level);
-		level--;
-	}
+	cout << root->payload << endl;
+
+	left_side=false;
+	vprint(root->right, "|");
+	left_side=true;
+	vprint(root->left, "");
 }
 
 /**
