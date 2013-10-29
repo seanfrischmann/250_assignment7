@@ -27,11 +27,9 @@ string version =
  * vprint method
  *------------------------------------------------------------------------------
 */
-bool right_case=true;
 void vprint(BTNode<string>* root, string prefix){
-	if(right_case){
+	if(prefix.length() < 1){
 		cout << prefix << "__" << root->payload << endl;
-		right_case = false;
 	}else{
 		string payload_prefix;
 		payload_prefix = prefix;
@@ -40,7 +38,6 @@ void vprint(BTNode<string>* root, string prefix){
 	}
 	
 	if(root->right != NULL) {
-		right_case = true;
 		vprint(root->right, prefix + "  |");
 		cout << prefix << "  |" << endl;
 	}else if((root->left != NULL) && (root->right == NULL)){
