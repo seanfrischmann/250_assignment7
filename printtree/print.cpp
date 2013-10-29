@@ -27,45 +27,31 @@ string version =
  * vprint method
  *------------------------------------------------------------------------------
 */
-bool left_side=false;
-bool first_case=true;
-bool second_case=false;
+bool right_case=true;
 void vprint(BTNode<string>* root, string prefix){
-	if(!left_side){
-		if(first_case){
-			cout << prefix << "__" << root->payload << endl;
-			first_case = false;
-		}else{
-			cout << prefix << "|__" << root->payload << endl;
-			second_case=false;
-		}
+	if(right_case){
+		cout << prefix << "__" << root->payload << endl;
+		right_case = false;
 	}else{
-		cout << prefix << "|__" << root->payload << endl;
+		string payload_prefix;
+		payload_prefix = prefix;
+		payload_prefix[payload_prefix.length()-1]= '|';
+		cout << payload_prefix << "__" << root->payload << endl;
 	}
-
-	if(root->right != NULL){
-		left_side=false;
-		vprint(root->right, prefix += "  ");
-		cout << prefix << "|" << endl;
-	}else{
-		left_side=true;
+	
+	if(root->right != NULL) {
+		right_case = true;
+		vprint(root->right, prefix + "  |");
+		cout << prefix << "  |" << endl;
+	}else if((root->left != NULL) && (root->right == NULL)){
+		cout << prefix << "  |__x" << endl;
+		cout << prefix << "  |" << endl;
 	}
-
 
 	if((root->left == NULL) && (root->right != NULL)){
-		cout << prefix << " |__x" << endl;
-		second_case=true;
-	}else if((root->left != NULL) && (root->right == NULL)){
-		cout << prefix << " |__x" << endl;
-		second_case=true;
-	}
-	if(root->left != NULL){
-		if(!second_case){
-			vprint(root->left, prefix += "");
-			second_case=true;
-		}else{
-			vprint(root->left, prefix += " ");
-		}
+		cout << prefix << "  |__x" << endl;
+	}if(root->left != NULL) {
+		vprint(root->left, prefix + "   ");
 	}
 }
 
@@ -78,10 +64,9 @@ void vertical_print(BTNode<string>* root) {
     // your code goes here
 	cout << root->payload << endl;
 
-	left_side=false;
 	vprint(root->right, "|");
-	left_side=true;
-	vprint(root->left, "");
+	cout << "|" << endl;
+	vprint(root->left, " ");
 }
 
 /**
