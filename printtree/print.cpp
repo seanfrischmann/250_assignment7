@@ -104,29 +104,43 @@ vector<string> hvector(BTNode<string>* root){
 		string spaces_len;
 		string output="";
 		if(root_len < max){
-			for(int i=0;i < max+1; i++){
+			int dash_number= (max - root->payload.length())+2;
+			for(int i=0;i < dash_number; i++){
 				root_payload += "_";
+			}
+			for(int i=0;i < max+1; i++){
 				spaces += " ";
 			}
-			output=left.at(0)+spaces+right.at(0);
 			spaces_len=spaces;
 		}else{
 			for(int i=1; i < root_len; i++){
 				spaces += " ";
 			}
 			spaces_len=spaces+" ";
-			output=left.at(0)+spaces_len+right.at(0);
 		}
 		ret.push_back(root_payload);
 		ret.push_back("|"+spaces+"\\");
-		ret.push_back(output);
-		if(right.size() > left.size()){
-			spaces_len+=" ";
-			for(int i=1; i < right.size(); i++){
+		int right_size= right.size();
+		int left_size= left.size();
+		int j=0;
+		spaces_len+=" ";
+		while((right_size >= 1) && (left_size >= 1)){
+			string spaces_btwn_LR;
+			int length_btwn_LR=(spaces_len.length())-(left.at(j).length());
+			for(int i=0; i < length_btwn_LR; i++){
+				spaces_btwn_LR += " ";
+			}
+			ret.push_back(left.at(j)+spaces_btwn_LR+right.at(j));
+			right_size--;
+			left_size--;
+			j++;
+		}
+		if(right.size() > 1){
+			for(int i=j; i < right.size(); i++){
 				ret.push_back(spaces_len+right.at(i));
 			}
-		}else if(left.size() > right.size()){
-			for(int i=1; i < left.size(); i++){
+		}if(left.size() > j){
+			for(int i=j; i < left.size(); i++){
 				ret.push_back(left.at(i));
 			}
 		}
@@ -146,7 +160,6 @@ void horizontal_print(BTNode<string>* root) {
 	for(int i=0; i < vec.size(); i++){
 		cout << vec.at(i) << endl;
 	}
-    cout << "Horizontal print: TBD\n";
 }
 
 /**
