@@ -99,9 +99,36 @@ vector<string> hvector(BTNode<string>* root){
 				max = left.at(i).length();
 			}
 		}
-		if(root_len > max){
-			ret.push_back(root->payload);
+		string root_payload = root->payload;
+		string spaces="";
+		string spaces_len;
+		string output="";
+		if(root_len < max){
+			for(int i=0;i < max+1; i++){
+				root_payload += "_";
+				spaces += " ";
+			}
+			output=left.at(0)+spaces+right.at(0);
+			spaces_len=spaces;
 		}else{
+			for(int i=1; i < root_len; i++){
+				spaces += " ";
+			}
+			spaces_len=spaces+" ";
+			output=left.at(0)+spaces_len+right.at(0);
+		}
+		ret.push_back(root_payload);
+		ret.push_back("|"+spaces+"\\");
+		ret.push_back(output);
+		if(right.size() > left.size()){
+			spaces_len+=" ";
+			for(int i=1; i < right.size(); i++){
+				ret.push_back(spaces_len+right.at(i));
+			}
+		}else if(left.size() > right.size()){
+			for(int i=1; i < left.size(); i++){
+				ret.push_back(left.at(i));
+			}
 		}
 	}else{
 		ret.push_back(root->payload);
@@ -115,6 +142,10 @@ vector<string> hvector(BTNode<string>* root){
  */
 void horizontal_print(BTNode<string>* root) {
     // your code goes here
+	vector<string> vec = hvector(root);
+	for(int i=0; i < vec.size(); i++){
+		cout << vec.at(i) << endl;
+	}
     cout << "Horizontal print: TBD\n";
 }
 
