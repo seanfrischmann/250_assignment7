@@ -82,45 +82,29 @@ void vertical_print(BTNode<string>* root) {
 
 /**
  * -----------------------------------------------------------------------------
- * find length of left side
+ * 
  * -----------------------------------------------------------------------------
  */
-int length_of_leftside(BTNode<string>* root, int level){
-	int ret=0;
-	int max = root->payload.length();
-	int next;
-	if(root->left != NULL){
-		next = length_of_leftside(root->left, level+1);
-		if(max < next){
-			max = next;
+vector<string> hvector(BTNode<string>* root){
+	vector<string> ret;
+	if(root == NULL){
+		ret.push_back("x");
+	}else if((root->left != NULL) || (root->right != NULL)){
+		vector<string> left = hvector(root->left);
+		vector<string> right = hvector(root->right);
+		int max = left.at(0).length();
+		int root_len = root->payload.length();
+		for(int i = 1; i < left.size(); i++){
+			if(left.at(i).length() > max){
+				max = left.at(i).length();
+			}
 		}
-	}if(level > 0){
-		return max;
-	}else{
-		ret +=max;
-	}
-	return ret;
-}
-
-/**
- * -----------------------------------------------------------------------------
- * find length of right side
- * -----------------------------------------------------------------------------
- */
-int length_of_rightside(BTNode<string>* root, int level){
-	int ret=0;
-	if(level
-	int max = root->payload.length();
-	int next;
-	if(root->right != NULL){
-		next = length_of_rightside(root->right, level+1);
-		if(max < next){
-			max = next;
+		if(root_len > max){
+			ret.push_back(root->payload);
+		}else{
 		}
-	}if(level>1){
-		return max;
 	}else{
-		ret += max;
+		ret.push_back(root->payload);
 	}
 	return ret;
 }
@@ -131,8 +115,6 @@ int length_of_rightside(BTNode<string>* root, int level){
  */
 void horizontal_print(BTNode<string>* root) {
     // your code goes here
-	cout << length_of_leftside(root->left, 0) << endl;
-	cout << length_of_rightside(root->left, 0) << endl;
     cout << "Horizontal print: TBD\n";
 }
 
