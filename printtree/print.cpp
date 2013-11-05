@@ -92,42 +92,44 @@ vector<string> hvector(BTNode<string>* root){
 	}else if((root->left != NULL) || (root->right != NULL)){
 		vector<string> left = hvector(root->left);
 		vector<string> right = hvector(root->right);
-		int max = left.at(0).length();
-		int root_len = root->payload.length();
-		for(int i = 1; i < left.size(); i++){
+		size_t max = left.at(0).length();
+		size_t root_len = root->payload.length();
+		for(size_t i = 1; i < left.size(); i++){
 			if(left.at(i).length() > max){
 				max = left.at(i).length();
 			}
 		}
 		string root_payload = root->payload;
-		string spaces="";
+		string space_btwn_elements="";
 		string spaces_len;
 		string output="";
+		int space_modifier=0;
 		if(root_len < max){
+			space_modifier=1;
 			int dash_number= (max - root->payload.length())+2;
 			for(int i=0;i < dash_number; i++){
 				root_payload += "_";
 			}
-			for(int i=0;i < max+1; i++){
-				spaces += " ";
+			for(size_t i=0;i < max+1; i++){
+				space_btwn_elements += " ";
 			}
-			spaces_len=spaces;
+			spaces_len=space_btwn_elements;
 		}else{
-			for(int i=1; i < root_len; i++){
-				spaces += " ";
+			for(size_t i=1; i < root_len; i++){
+				space_btwn_elements += " ";
 			}
-			spaces_len=spaces+" ";
+			spaces_len=space_btwn_elements+" ";
 		}
 		ret.push_back(root_payload);
-		ret.push_back("|"+spaces+"\\");
-		int right_size= right.size();
-		int left_size= left.size();
-		int j=0;
+		ret.push_back("|"+space_btwn_elements+"\\");
+		size_t right_size= right.size();
+		size_t left_size= left.size();
+		size_t j=0;
 		spaces_len+=" ";
 		while((right_size >= 1) && (left_size >= 1)){
 			string spaces_btwn_LR;
-			int length_btwn_LR=(spaces_len.length())-(left.at(j).length());
-			for(int i=0; i < length_btwn_LR; i++){
+			size_t length_btwn_LR=(spaces_len.length())-(left.at(j).length());
+			for(size_t i=0; i < length_btwn_LR + space_modifier; i++){
 				spaces_btwn_LR += " ";
 			}
 			ret.push_back(left.at(j)+spaces_btwn_LR+right.at(j));
@@ -136,11 +138,11 @@ vector<string> hvector(BTNode<string>* root){
 			j++;
 		}
 		if(right.size() > 1){
-			for(int i=j; i < right.size(); i++){
-				ret.push_back(spaces_len+right.at(i));
+			for(size_t i=j; i < right.size(); i++){
+				ret.push_back(spaces_len+" "+right.at(i));
 			}
 		}if(left.size() > j){
-			for(int i=j; i < left.size(); i++){
+			for(size_t i=j; i < left.size(); i++){
 				ret.push_back(left.at(i));
 			}
 		}
@@ -157,7 +159,7 @@ vector<string> hvector(BTNode<string>* root){
 void horizontal_print(BTNode<string>* root) {
     // your code goes here
 	vector<string> vec = hvector(root);
-	for(int i=0; i < vec.size(); i++){
+	for(size_t i=0; i < vec.size(); i++){
 		cout << vec.at(i) << endl;
 	}
 }
