@@ -82,7 +82,7 @@ void vertical_print(BTNode<string>* root) {
 
 /**
  * -----------------------------------------------------------------------------
- * 
+ *Creates a vector storing elements to be printed as a horizontal tree 
  * -----------------------------------------------------------------------------
  */
 vector<string> hvector(BTNode<string>* root){
@@ -164,6 +164,43 @@ void horizontal_print(BTNode<string>* root) {
 	}
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ *Creates a vector storing elements to be printed as a symetrical tree 
+ * -----------------------------------------------------------------------------
+ */
+vector<string> svector(BTNode<string>* root){
+	vector<string> ret;
+	if(root == NULL){
+		ret.push_back("x");
+	}else if((root->left != NULL) || (root->right != NULL)){
+		vector<string> left = svector(root->left);
+		vector<string right = svector(root->right);
+		size_t root_length = root->payload.length();
+		size_t big_half_max;
+		size_t small_half_max=0;
+		string root_payload = root->payload;
+		string spaces_in_front="";
+		if(root->left != NULL){
+			big_half_max =  root->left->payload/2;
+			if((root->left->payload%2) != 0){
+				big_half_max += 1;
+			}
+			for(int i=0; i< big_half_max; i++){
+				spaces_in_front += " ";
+			}
+		}else if(root->right != NULL){
+			spaces_in_front += " ";
+		}
+		if(root_length > small_half_max){
+			
+		}
+		}
+	}else{
+		ret.push_back(root->payload);
+	}
+	return ret;
+}
 /**
  * -----------------------------------------------------------------------------
  * print a given tree symmetrically
