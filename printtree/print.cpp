@@ -169,7 +169,7 @@ void horizontal_print(BTNode<string>* root) {
  *Creates a vector storing elements to be printed as a symetrical tree 
  * -----------------------------------------------------------------------------
  */
-vector<string> svector(BTNode<string>* root){
+/*vector<string> svector(BTNode<string>* root){
 	vector<string> ret;
 	if(root == NULL){
 		ret.push_back("x");
@@ -200,7 +200,7 @@ vector<string> svector(BTNode<string>* root){
 		ret.push_back(root->payload);
 	}
 	return ret;
-}
+}*/
 /**
  * -----------------------------------------------------------------------------
  * print a given tree symmetrically
